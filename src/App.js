@@ -109,7 +109,7 @@ export default class App extends Component {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('http://localhost:3001/https://desolate-ridge-72290.herokuapp.com/image', {
+          fetch('https://desolate-ridge-72290.herokuapp.com/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
