@@ -43,28 +43,34 @@ export default class App extends Component {
   }
 
   loadUser = (data) => {
-    this.setState({user: {
-      id: data.id,
-      name: data.name,
-      email: data.email,
-      entries: data.entries,
-      joined: data.joined
+    this.setState({
+      imageUrl: '',
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined
     }})
   }
 
   calculateFaceLocation = (data) => {
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const faces = [];
+    data.outputs[0].data.regions.forEach(face => {
+      faces.push(face.region_info.bounding_box);
+    });
+    console.log(faces);
+    //const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById('inputImage');
     const width = Number(image.width);
     const height = Number(image.height);
     return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height),
+      leftCol: faces[0].left_col * width,
+      topRow: faces[0].top_row * height,
+      rightCol: width - (faces[0].right_col * width),
+      bottomRow: height - (faces[0].bottom_row * height),
     }
   }
-
 
   displayFaceBox = (box) => {
     this.setState({ box: box })
