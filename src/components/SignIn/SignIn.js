@@ -16,7 +16,7 @@ export default class SignIn extends React.Component {
   }
 
   onSubmitSignIn = () => {
-    fetch('https://desolate-ridge-72290.herokuapp.com/signin', {
+    fetch('localhost:3000', {
       method:'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({

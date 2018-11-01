@@ -55,20 +55,15 @@ export default class App extends Component {
   }
 
   calculateFaceLocation = (data) => {
-    const faces = [];
-    data.outputs[0].data.regions.forEach(face => {
-      faces.push(face.region_info.bounding_box);
-    });
-    console.log(faces);
-    //const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById('inputImage');
     const width = Number(image.width);
     const height = Number(image.height);
     return {
-      leftCol: faces[0].left_col * width,
-      topRow: faces[0].top_row * height,
-      rightCol: width - (faces[0].right_col * width),
-      bottomRow: height - (faces[0].bottom_row * height),
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - (clarifaiFace.right_col * width),
+      bottomRow: height - (clarifaiFace.bottom_row * height),
     }
   }
 
@@ -82,7 +77,7 @@ export default class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-      fetch('https://desolate-ridge-72290.herokuapp.com/imageurl', {
+      fetch('localhost:3000', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -92,7 +87,7 @@ export default class App extends Component {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('https://desolate-ridge-72290.herokuapp.com/image', {
+          fetch('localhost:3000', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

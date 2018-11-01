@@ -20,7 +20,7 @@ export default class Register extends React.Component {
     this.setState({password: event.target.value})
   }
   onSubmitSignIn = () => {
-    fetch('https://desolate-ridge-72290.herokuapp.com/register', {
+    fetch('localhost:3000', {
       method:'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
